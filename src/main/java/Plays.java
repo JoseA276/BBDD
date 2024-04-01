@@ -9,10 +9,10 @@ public class Plays {
     int id_match;
     @Id
     int id_player;
-    @Column(name = "stats")
-    int Stats;
+    @Column(name = "starts")
+    int stats;
     @Column(name = "substituted")
-    int Substituted;
+    int substituted;
     @Column(name = "goals")
     int goals;
     @Column(name = "yellow")
@@ -20,18 +20,18 @@ public class Plays {
     @Column(name = "red")
     boolean red;
     @ManyToOne
-    @JoinColumn(name = "id_match")
+    @JoinColumn(name = "id_match", updatable = false, insertable = false)
 
     Match match;
     @ManyToOne
-    @JoinColumn(name = "id_player")
+    @JoinColumn(name = "id_player", updatable = false, insertable = false)
     Player player;
 
     public Plays(int id_match, int id_player, int stats, int substituted, int goals, int yellow, boolean red, Match match, Player player) {
         this.id_match = id_match;
         this.id_player = id_player;
-        Stats = stats;
-        Substituted = substituted;
+        this.stats = stats;
+        this.substituted = substituted;
         this.goals = goals;
         this.yellow = yellow;
         this.red = red;
@@ -56,19 +56,19 @@ public class Plays {
     }
 
     public int getStats() {
-        return Stats;
+        return stats;
     }
 
     public void setStats(int stats) {
-        Stats = stats;
+        this.stats = stats;
     }
 
     public int getSubstituted() {
-        return Substituted;
+        return substituted;
     }
 
     public void setSubstituted(int substituted) {
-        Substituted = substituted;
+        this.substituted = substituted;
     }
 
     public int getGoals() {
@@ -110,11 +110,29 @@ public class Plays {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+    @Override
+    public String toString() {
+        return "Plays{" +
+                "id_match=" + id_match +
+                ", id_player=" + id_player +
+                ", stats=" + stats +
+                ", substituted=" + substituted +
+                ", goals=" + goals +
+                ", yellow=" + yellow +
+                ", red=" + red +
+                ", match=" + match +
+                ", player=" + player +
+                '}';
+    }
 }
 
 class TimePK implements Serializable {
     protected int id_match;
     protected int id_player;
+    public TimePK(){
+
+    }
 
     public TimePK(int id_match, int id_player) {
         this.id_match = id_match;
@@ -136,5 +154,6 @@ class TimePK implements Serializable {
     public void setId_player(int id_player) {
         this.id_player = id_player;
     }
+
 }
 

@@ -4,7 +4,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "Player")
+@Table (name = "player")
 public class Player {
     @Id
     @Column(name = "id")
@@ -46,4 +46,14 @@ public class Player {
     public void setForename(String forename) {
         this.forename = forename;
     }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", surname='" + surname + '\'' +
+                ", forename='" + forename + '\'' +
+                '}';
+    }
 }
+

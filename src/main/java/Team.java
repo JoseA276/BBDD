@@ -1,11 +1,11 @@
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 @Entity
-@Table(name = "Team")
+@Table(name = "team")
 public class Team {
     @Id
     @Column(name = "code")
@@ -17,11 +17,22 @@ public class Team {
     @Column(name = "city")
     String city;
 
+    @OneToMany(mappedBy = "homeTeam", cascade = CascadeType.ALL)
+    private Set<Match> listMatchesHome;
+
+    @OneToMany(mappedBy = "awayTeam", cascade = CascadeType.ALL)
+    private Set<Match> listMatchesAway;
+
+   public Team(){
+
+   }
     public Team(int code, String name, String stadium, String city) {
         this.code = code;
         this.name = name;
         this.stadium = stadium;
         this.city = city;
+        this.listMatchesHome= new HashSet<>();
+        this.listMatchesAway= new HashSet<>();
     }
 
     public int getCode() {
@@ -54,5 +65,40 @@ public class Team {
 
     public void setCity(String city) {
         this.city = city;
+    }
+    public Match getMatchesHome(int i){
+        Iterator<Match> it = listMatchesHome.iterator();
+        for (int j = 0; j < i; j++)it.next();
+        return it.next();
+    }
+
+    public Set<Match> getListMatchesHome() {
+        return listMatchesHome;
+    }
+    public void addMatchesHome(Match match){
+        listMatchesHome.add(match);
+    }
+    public Match getMatchesAway(int i){
+        Iterator<Match> it = listMatchesAway.iterator();
+        for (int j = 0; j < i; j++)it.next();
+        return it.next();
+    }
+
+    public Set<Match> getListMatchesAway() {
+        return listMatchesAway;
+    }
+    public void addMatchesAway(Match match){
+        listMatchesAway.add(match);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "code=" + code +
+                ", name='" + name + '\'' +
+                ", stadium='" + stadium + '\'' +
+                ", city='" + city + '\'' +
+                '}';
     }
 }

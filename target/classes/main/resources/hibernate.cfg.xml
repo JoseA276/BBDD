@@ -14,5 +14,6 @@
         <mapping class="Player"/>
         <mapping class="Team"/>
         <mapping class="Match"/>
+        <mapping class="Plays"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,5 +1,6 @@
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
+
 @Entity
 @Table(name = "match")
 public class Match {
@@ -8,19 +9,21 @@ public class Match {
     int code;
     @Column(name = "played")
     Date played;
-    @Column(name = "code_home")
-    int code_home;
-    @Column(name = "code_away")
-    int code_away;
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
-    Team team;
+    @ManyToOne
+    @JoinColumn(name = "code_home", insertable = false, updatable = false)
+    Team homeTeam;
+    @ManyToOne
+    @JoinColumn(name = "code_away", insertable = false, updatable = false)
+    Team awayTeam;
 
-    public Match(int code, Date played, int code_home, int code_away, Team team) {
+    public Match(){
+
+    }
+    public Match(int code, Date played, Team homeTeam, Team awayTeam) {
         this.code = code;
         this.played = played;
-        this.code_home = code_home;
-        this.code_away = code_away;
-        this.team = team;
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
     }
 
     public int getCode() {
@@ -39,27 +42,29 @@ public class Match {
         this.played = played;
     }
 
-    public int getCode_home() {
-        return code_home;
+    public Team getHomeTeam() {
+        return homeTeam;
     }
 
-    public void setCode_home(int code_home) {
-        this.code_home = code_home;
+    public void setHomeTeam(Team homeTeam) {
+        this.homeTeam = homeTeam;
     }
 
-    public int getCode_away() {
-        return code_away;
+    public Team getAwayTeam() {
+        return awayTeam;
     }
 
-    public void setCode_away(int code_away) {
-        this.code_away = code_away;
+    public void setAwayTeam(Team awayTeam) {
+        this.awayTeam = awayTeam;
     }
 
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
+    @Override
+    public String toString() {
+        return "Match{" +
+                "code=" + code +
+                ", played=" + played +
+                ", code_home=" + homeTeam +
+                ", code_away=" + awayTeam +
+                '}';
     }
 }
